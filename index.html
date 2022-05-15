@@ -1,0 +1,1157 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/beige.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            font-size: 60%;
+        }
+
+        #grid {
+            min-height: 100%;
+            display: grid;
+            grid-template-rows: 1fr auto;
+
+        }
+
+        #top {
+            grid-row: 1;
+        }
+
+        #bottom {
+            grid-row: 2;
+            padding-bottom: 10%;
+        }
+
+		.center-img {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 50%;
+		}
+
+		.multiCol {
+   			display: table;
+			table-layout: fixed; 
+			width: 100%;
+			text-align: left;
+		}
+		.col {
+				display: table-cell;
+				vertical-align: top;
+				width: 50%;
+				padding: 2% 0 2% 3%; 
+			}
+		
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown>
+                <textarea data-template>
+						## Functional Programming
+						### Why you should care 
+					</textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Functional Programming
+                    A programming paradigm where programs are constructed by applying and composing functions.
+
+                    - one of the oldest paradigms <!-- .element: class="fragment" data-fragment-index="1" -->
+                    - [Youtube: Why Isn't Functional Programming the Norm?](https://www.youtube.com/watch?v=QyJZzq0v7Z4)  <!-- .element: class="fragment" data-fragment-index="1" -->
+                    - main building block: functions <!-- .element: class="fragment" data-fragment-index="2" -->
+                    - functions are first class citizens <!-- .element: class="fragment" data-fragment-index="3" -->
+                        - functions can be arguments of functions <!-- .element: class="fragment" data-fragment-index="4" -->
+                        - functions can return functions <!-- .element: class="fragment" data-fragment-index="5" -->
+                        - functions can be assigned to variables <!-- .element: class="fragment" data-fragment-index="6" -->
+                    
+                    ---
+
+                    ## Python example
+                    ```python
+                    def twice(f):
+                        def result(x):
+                            return f(f(x))
+                        return result
+                    
+                    plus_three = lambda i: i + 3
+                    g = twice(plus_three)
+                    g(7) # = 13
+                    ```
+
+                    ---
+
+                    ## Other paradigms
+
+                    - **procedural**: step-by-step description of procedures (e.g. C, BASIC, FORTRAN)
+                    - **Object-oriented (OOP)**: data & methods are combined into objects
+                    - ...
+
+                    ---
+
+                    ## most programming languages are multi-paradigm
+
+                    | language | paradigms |
+                    | --- | --- |
+                    | python | object-oriented, procedural (imperative), functional, structured, reflective |
+                    | C# |  structured, imperative, object-oriented, event-driven, task-driven, functional, generic, reflective, concurrent |
+                    | Java | generic, object-oriented (class-based), functional, imperative, reflective, concurrent |
+                    
+                    ---
+
+                    ## functional programming to the max
+
+                    FP is infamous for being
+                    - difficult <!-- .element: class="fragment" data-fragment-index="1" -->
+                    - like math (category theory) <!-- .element: class="fragment" data-fragment-index="2" -->
+                    - scary words/concepts: functor, applicative, bifunctor, monad, kleisli, monoid, semi-group, effects systems...  <!-- .element: class="fragment" data-fragment-index="3" -->
+
+                    <div class="fragment" style="font-size: 50%; margin-top: 2em;">
+                    "In this live coding session, John hopes you'll be amused and a maybe little terrified as he shows you where pure FP leads on one of the simplest programs possible, pointing out both the benefits and the costs of pure functional programming"
+
+                    [https://www.youtube.com/watch?v=sxudIMiOo68](https://www.youtube.com/watch?v=sxudIMiOo68)
+                    </div>
+
+                    ---
+
+                    ## functional programming is different
+                    #### (from what most developers are used to) <!-- .element: class="fragment" -->
+
+                    - don't have to do fp to the max <!-- .element: class="fragment" -->
+                    - some concepts need time to get used to <!-- .element: class="fragment" -->
+                    - many of the (basic) techniques are useful/help because they improve code <!-- .element: class="fragment" -->
+                    - languages are multi-paradigm => you can use multiple paradigms :) <!-- .element: class="fragment" -->
+
+                    ---
+
+                    ## pure functions
+				</textarea>
+            </section>
+
+
+            <section data-auto-animate >
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+                        <code data-trim data-noescape class="language-scala">
+		                def sqrt(x: Double): Double = ???
+		                def sin(x: Double): Double = ???
+	                    </code>
+                        </pre>
+                    </div>
+                    <div id="bottom">
+                        <span>
+                            <ul>
+                                <li class="fragment">We know their meaning</li>
+                                <li class="fragment">no idea how they are implemented (at least I don't know and I don't
+                                    care)</li>
+                            </ul>
+                        </span>
+                    </div>
+                </div>
+
+            </section>
+
+            <section data-auto-animate >
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+						<code data-trim data-noescape class="language-scala" data-line-numbers="4-6">
+							def sqrt(x: Double): Double = ???
+							def sin(x: Double): Double = ???
+
+							def f(x: Double, y: Double): Double = {
+								sqrt(x) + sin(y * sqrt(x))
+							}
+						</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>new functions by composition of functions</span>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <section data-auto-animate >
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala" data-line-numbers="4-6">
+												def sqrt(x: Double): Double = ???
+												def sin(x: Double): Double = ???
+					
+												def f(x: Double, y: Double): Double = {
+													sqrt(x) + sin(y * sqrt(x))
+												// ^^^^^^^           ^^^^^^^	
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>We're calling sqrt(x) twice</span>
+                    </div>
+                </div>
+            </section>
+
+            <section data-auto-animate>
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala" data-line-numbers="8-11">
+												def sqrt(x: Double): Double = ???
+												def sin(x: Double): Double = ???
+					
+												def f(x: Double, y: Double): Double = {
+													sqrt(x) + sin(y * sqrt(x))
+												}
+
+												def f2(x: Double, y: Double): Double = {
+													val sqrt_x = sqrt(x)
+													sqrt_x + sin(y * sqrt_x)
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>We can pre-calculate the value of sqrt(x)</span>
+                    </div>
+                </div>
+            </section>
+
+			<section data-auto-animate >
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala" data-line-numbers="4-11">
+												def sqrt(x: Double): Double = ???
+												def sin(x: Double): Double = ???
+					
+												def f(x: Double, y: Double): Double = {
+													sqrt(x) + sin(y * sqrt(x))
+												}
+
+												def f2(x: Double, y: Double): Double = {
+													val sqrt_x = sqrt(x)
+													sqrt_x + sin(y * sqrt_x)
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>f(x,y) and f2(x,y) are identical</span>
+                    </div>
+                </div>
+            </section>
+
+			<section data-auto-animate >
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala" data-line-numbers="9">
+												def sqrt(x: Double): Double = ???
+												def sin(x: Double): Double = ???
+					
+												def f(x: Double, y: Double): Double = {
+													sqrt(x) + sin(y * sqrt(x))
+												}
+
+												def f2(x: Double, y: Double): Double = {
+													val sqrt_x = sqrt(x)
+													sqrt_x + sin(y * sqrt_x)
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>Can we always pre-calculate?</span>
+                    </div>
+                </div>
+            </section>
+
+			<section data-auto-animate >
+                <h2>Math Functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala" data-line-numbers="1-4">
+												def sqrt(x: Double): Double = {
+													println("my_sqrt called")
+													Math.sqrt(x)
+												}
+												def sin(x: Double): Double = ???
+					
+												def f(x: Double, y: Double): Double = {
+													sqrt(x) + sin(y * sqrt(x))
+												}
+
+												def f2(x: Double, y: Double): Double = {
+													val sqrt_x = sqrt(x)
+													sqrt_x + sin(y * sqrt_x)
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>With this definition f and f2 are not identical anymore.</span>
+                    </div>
+                </div>
+            </section>
+
+			<section style="font-size: 60%;">
+				<h2>Math Functions</h2>
+				<ul>
+					<li>math functions are in a subset of functions in programming languages (called <b>pure</b>) 
+						<img data-src="imgs/pure_functions_subset.drawio.png" class="center-img" /></li>
+					<li class="fragment">
+						Defining properties
+						<ol>
+							<li>the return value is identical for identical arguments</li>
+							<li>the function doesn't change anything observable on the outside</li>
+						</ol>
+					</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Nice properties of pure functions</h2>
+
+				<ol>
+					<li class="fragment">if the result of a pure function is not used, it can be removed</li>
+					<li class="fragment"><span>if there is no dependency between two calls of pure functions, their order can be changed or they can be performed in parallel</span></li>
+					<li class="fragment">easily testable in unit tests</li>
+					<li class="fragment">easier to reason about code when we don't have to know the side effects of called functions</li>
+				</ol>
+
+			</section>
+
+			<section>
+				<span><b>Property 2:</b>if there is no dependency between two calls of pure functions, their order can changed or they can be performed in parallel</span>
+				<div>
+					<ul>
+						<li class="fragment">Concurrency/Parllelism is important
+				<ul>
+					<li class="fragment">today's CPUs have multiple cores</li>
+					<li class="fragment">cloud computing is distributed</li>
+					<li class="fragment">doing multiple things concurrently is important (e.g. REST API with multiple users)</li>
+				</ul>
+			</li><li class="fragment">Concurrency/Parllelism is hard because of shared state (e.g. race conditions)
+					<ul>
+					<li class="fragment">pure functions make concurrency/parallelism easier</li>
+					</ul></li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<span><b>Property 4:</b> easier to reason about code when we don't have to know the side effects of called functions</span>
+			</section>
+
+			<section>
+				<h4>Interlude: Anti-pattern global variable</h4>
+
+				<div class = "fragment">
+				<pre><code data-trim data-noescape class="language-scala">
+					var x  = 42.0
+					def f(): Double = {
+						x += 5
+						x
+					}
+					// ...
+					println(f()) // what will be printed? depends on ...
+				</code></pre>
+			</div>
+			<div class="fragment">
+				Why is this an anti-pattern?
+				<ul>
+					<li class="fragment">not because computers are bad at handling it</li>
+					<li class="fragment">human brains are bad at keeping it in mind</li>
+					<li class="fragment">if you investigate the program above: 
+						<ul>you have to consider all the code using `x`, all possible flows and states</li>
+					<li class="fragment">this gets unbearable very quickly</li></ul>
+				</ul>
+			</div>
+
+			</section>
+
+			<section>
+				<span><b>Property 4:</b> easier to reason about code when we don't have to know the side effects of called functions</span>
+				<div class = "fragment">
+					<pre><code data-trim data-noescape class="language-scala">
+						def f(x: Double, y: Double): Double = {
+							sqrt(x) + sin(y * sqrt(x))
+						}
+						// ...
+						f(2,3)
+					</code></pre>
+				</div>
+				<div>
+					<ul>
+						<li class="fragment">We only have to look at the function call</li>
+						<li class="fragment">f, sin and sqrt only return a value nothing else is changed</li>
+						<li class="fragment">we can look at functions in isolation, don't have to have full code in mind</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				Pure functions are great (you're hopefully convinced by now)
+
+				<div class="fragment">
+					Which functions are pure? 
+					<ul>
+						<li class="fragment">we know math functions are pure</li>
+						<li class="fragment">which other functions are pure?</li>
+						<ul><li class="fragment">impureness is poisonous: if a function calls an impure function, the function is impure</li>
+						<li class="fragment">let's look at some impure functions</li></ul>
+					</ul>
+				</div>
+			</section>
+
+            <section>
+                <h2>Impure functions</h2>
+                <div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+						<code data-trim data-noescape class="language-scala" data-line-numbers="1-2|4-5|7-8|10-11|13-14">
+							// the return value can change if x was changed between calls
+							def f() : Double = x 
+
+							// changes argument which is observable outside of g
+							def g(a: A) = a.setMember("hello world")
+
+							// println is observable from the outside
+							def h(x: String) = println(x)
+
+							// the return value is not the same for every call
+							def k(): String = readline()
+
+							// the functions doesn't return a value
+							def l(): Int = throw Exception("booom!")
+						</code></pre>
+                    </div>
+                </div>
+            </section>
+			
+
+			<section>
+				<h4>Why did we investigated pure functions?</h4>
+				<ul>
+					<li class="fragment">Almost all programs need impure functions</li>
+					<li class="fragment">Almost all functions are impure</li>
+				</ul>
+				<div class="fragment r-frame">
+					Inside every impure function is a pure function waiting to get out.
+				</div>
+				<div class="fragment" style="font-size: 50%; text-align: left;">
+				More formal:
+				<p>Given an impure function f: A -> B</p>
+				<div>We can split f into two functions<br>
+					<ul>
+						<li>A pure function A -> D</li>
+						<li>An impure function D -> B</li>
+					</ul>
+				</div>
+				</div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												case class Player(name: String, score: Int)
+
+												// impure
+												def contest(p1: Player, p2: Player): Unit = {
+													if (p1.score > p2.score2) println(s"${p1.name} is the winner")
+													else if (p2.score > p1.score1) println(s"${p2.name} is the winner")
+													else println("It's a draw")
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>We start with an impure function</span>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												case class Player(name: String, score: Int)
+
+												// pure
+												def winner(p1: Player, p2: Player): Option[Player] = {
+													if (p1.score > p2.score) Some(p1)
+													else if (p2.score > p1.score1) Some(p2)
+													else None
+												}
+
+												// impure
+												def contest(p1: Player, p2: Player): Unit = {
+													winner(p1,p2) match {
+														case Some(Player(name, _)) => println(s"$name is the winner")
+														case None => println("It's a draw")
+													}
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>Refactor: extract a function to determine the winner</span>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h4>Example</h4>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												// pure
+												def winner(p1: Player, p2: Player): Option[Player] = {
+													if (p1.score > p2.score) Some(p1)
+													else if (p2.score > p1.score1) Some(p2)
+													else None
+												}
+
+												// pure
+												def winnerMsg(p: Option[Player]): String = 
+													p.map{ case (Player(name, _)) => s"$name is the winner" }.getOreElse("It's a draw")
+
+												// impure
+												def contest(p1: Player, p2: Player): Unit = {
+													println(winnerMsg(winner(p1,p2)))
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>Refactor: extract a function to return the message</span>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example 2</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class Cafe {
+													// difficult to test
+													def buyCoffee(cc: CreditCard): Coffee = {
+														val cup = new Coffee()
+														cc.charge(cup.price) // impure/side effect
+														cup
+													}
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>A simple cafe</span>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example 2</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class Cafe {
+													def buyCoffee(cc: CreditCard, p: PaymentService): Coffee = {
+														val cup = new Coffee()
+														p.charge(cc, cup.price) // pure or impure?
+														cup
+													}
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>Dependency injection.</span>
+						<ul>
+							<li class="fragment">if buyCoffee is pure or impure, depends on p.charge</li>
+							<li class="fragment">use mock PaymentService for testing</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example 2</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class Cafe {
+													// pure
+													def buyCoffee(cc: CreditCard): (Coffee, Charge) = {
+														val cup = new Coffee()
+														(cup, Charge(cc, cup.price))
+													}
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <span>Make buyCoffee pure</span>
+						<ul>
+							<li class="fragment">charging the credit card is moved to the outside</li>
+							<li class="fragment">We don't do sth., we describe what has to be done</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section>
+				Let's implement buyCoffees(cc: CreditCard, n: Int).
+
+				<p>don't charge for every coffee, charge the total sum</p>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example 2</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class Cafe {
+													def buyCoffee(cc: CreditCard, p: PaymentService): Coffee = ??? 
+
+													def buyCoffees(cc: CreditCard, n: Int, p: PaymentService) : List[Coffee] = {
+														List.fill(n)(buyCoffee(cc, p))
+													}
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        Using the version with dependency injection
+						<ul>
+							<li class="fragment">The credit card is charged for every coffee</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Example 2</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class Cafe {
+													// pure
+													def buyCoffee(cc: CreditCard): (Coffee, Charge) = ??? 
+
+													// pure
+													def buyCoffees(cc: CreditCard, n: Int) : (List[Coffee], Charge) = {
+														val purchases: List[(Coffee, Charge)] =List.fill(n)(buyCoffee(cc))
+														val (coffees, charges) = purchases.unzip()
+														(coffees, charges.reduce((c1,c2)=> c1.combine(c2)))
+													}
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        Using the version where buyCoffee is pure
+						<ul>
+							<li class="fragment">We could reuse our first function easily</li>
+							<li class="fragment">Pure functions let us build complex functions from easier building blocks</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section>
+				<h2>Building complex functions by compositions</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												def f(words: List[String]): Int = {
+													var result = 0
+													for (word <- words) {
+														val len = word.length
+														if (len > 2) result += len
+													}
+													result
+												}
+
+												f(List("hello", "I", "am", "Lennart")) // = 12
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        <ul>
+							<li>Sum number of letters in words. Only include words longer than 2 letters.</li>
+							<li  class="fragment">Let's make it a bit more functional</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h2>Building complex functions by compositions</h2>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												trait List[A] {
+													def map[B](f: A => B): List[B] // map every element using f
+													def filter(pred: A => Boolean): List[A] // filter list based on pred
+													def reduce(op: (A,A) => A) : A
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+                        Define pure functions for lists using higher order functions
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h4>Building complex functions by compositions</h4>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+						<div class="multiCol">
+							<div class="col">functional
+								<pre>
+									<code data-trim data-noescape class="language-scala">
+										def f(words: List[String]): Int = 
+											words
+											.map(_.length)
+											.filter(_ > 2)
+											.reduce(_ + _)
+									</code></pre>
+							</div>
+							<div class="col">imperative
+								<pre>
+									<code data-trim data-noescape class="language-scala">
+										def f(words: List[String]): Int = {
+											var result = 0
+											for (word <- words) {
+												val len = word.length
+												if (len > 2) result += len
+											}
+											result
+										}
+									</code></pre>
+							</div>
+						</div>
+                    </div>
+                    <div id="bottom" style="font-size: 70%;">
+                       <ul>
+							<li>functional is more expressive</li>
+							<li>functional: composition of functions</li>
+							<li class="fragment">parallelize: <ul><li class="fragment">imperative: need low level parralellization building blocks</li><li class="fragment">functional: use parallel version of map</li></ul></li>
+							<li  class="fragment">if data is big: could even leverage multiple compute nodes for map and reduce <a href="https://en.wikipedia.org/wiki/MapReduce">MapReduce</a></li>
+					   </ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h4>Example: Finding prime numbers (prime sieve) imperative</h4>
+				<div style="font-size: 60%;"><ol>
+					<li class="fragment">Write down all numbers starting from 2.</li> 
+					<li class="fragment">Start with the first element: append to list of primes and remove all elements divisible by this element.</li>
+					<li class="fragment">repeat</li>
+				</ol>
+				</div>
+				<div id="grid" class="r-stretch fragment">
+                    <div id="top">
+						
+								<pre>
+									<code data-trim data-noescape class="language-scala">
+										def primes(n: Int): List[Int] = {
+											val candidates = ArrayBuffer.fill(n)(true)
+											for (i <- 2 until n) {
+												if (candidates(i))
+													for (j <- 2*i until(n, i)) {
+														candidates(j) = false
+													}
+											}
+											val result = ListBuffer.empty[Int]
+											for (i <- 2 until n) {
+												if (candidates(i)) result.append(i)
+											}
+											result.toList
+										}
+									</code></pre>
+							
+                    </div>
+                    <div id="bottom" style="font-size: 70%;">
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				<h4>Example: Finding prime numbers (prime sieve) functional</h4>
+				<div style="font-size: 60%;"><ol>
+					<li>Write down all numbers starting from 2.</li> 
+					<li>Start with the first element: append to list of primes and remove all elements divisible by this element.</li>
+					<li>repeat</li>
+				</ol>
+				</div>
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+						
+								<pre>
+									<code data-trim data-noescape class="language-scala">
+										def removeDivisible(s: LazyList[Int], value: Int) : LazyList[Int] =
+											s.filter(_ % value != 0)
+
+										def sieve(s: LazyList[Int]) : LazyList[Int] = {
+											val firstElement = s.head
+											// #:: prepend to LazyList
+											firstElement #:: sieve(removeDivisible(s.tail, firstElement))
+										}
+
+										// a list that contains **ALL** prime numbers
+										val primes = sieve(LazyList.from(2)) 
+
+										println(primes) // LazyList(not computed)
+										println(primes.take(10).toList) // List(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
+									</code></pre>
+							
+                    </div>
+                    <div id="bottom" style="font-size: 60%;">
+						<ul>
+							<li>lazy evaluation: only compute what has to be computed when .toList is called</li>
+							<li class="fragment">This is how the big data framework Apache Spark works</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section>
+				<h2>Onion Architecture</h2>
+				<div class="multiCol">
+					<div class="col"><img data-src="imgs/onion.png"></div>
+					<div class="col" style="font-size: 50%;">
+						<ul>
+							<li class="fragment">dependency only from outside to inside</li>
+							<li class="fragment">infrastructure and business domain/model change at different cadence</li>
+							<li class="fragment">business domain is what comes from the business people</li>
+							<li class="fragment">infrastructure is an implementation detail</li>
+							<ul><li class="fragment">e.g. the database that you use doesn't influence the business model</li></ul>
+							<li class="fragment"><a href="https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures#clean-architecture">docs.microsoft.com</a></li>
+							<li class="fragment">adhering to this architecture requires discipline</li>
+							<ul><li class="fragment">nobody prevents you from putting db calls into your business domain (it's just code)</li></ul>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>Flow of a general request</h2>
+				<img data-src="imgs/flow.png">
+			</section>
+
+			<section>
+				<h2>Onion Architecture</h2>
+				<div class="multiCol">
+					<div class="col"><img data-src="imgs/onion2.png"></div>
+					<div class="col" style="font-size: 50%;">
+						<ul>
+							<li class="fragment">the inner layers are pure</li>
+							<li class="fragment">if you care about pureness, the onion pattern evolves more natural</li>
+							<li class="fragment">in languages like Haskel, code wouldn't even compile if you tried to put impure code into the business model (functions are marked as pure or impure)</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>data modeling</h2>
+			</section>
+
+			<section>
+				<h3>Object oriented</h3>
+				<ul>
+					<li class="fragment">define classes that combine data & methods</li>
+					<li class="fragment">define hierarchies between classes: is-a, has-a </li>
+					<li class="fragment">use class, abstract class, interface</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate>
+				<img data-src="imgs/class_diagram_animals.drawio.png" data-id="1">
+			</section>
+
+			<section data-auto-animate>
+				<img data-src="imgs/class_diagram_animals_int.drawio.png" data-id="1">
+				<ul>
+					<li  class="fragment">Is this the only hierarchy?</li>
+				</ul>
+			</section>
+
+			<section data-auto-animate>
+				<div class="multiCol">
+				<div class="col"><img data-src="imgs/class_diagram_animals_int.drawio.png" data-id="1"></div>
+				<div class="col"><img data-src="imgs/class_diagram_animals_alt.drawio.png" data-id="2"></div>
+				</div>
+				<ul>
+					<li class="fragment">How to model your class hierarchy not clear.</li>
+					<li class="fragment">You have to define hierarchy at the beginning.</li>
+					<li class="fragment">Changing it is difficult.</li>
+					<li class="fragment">When do you know the least about the project? At the beginning</li>
+					<li class="fragment">When do you have to define the hierarchy? At the beginning</li>
+				</ul>
+			</section>
+
+			<section>
+				<div class="multiCol" style="font-size: 60%;">
+					<div class="col"><h3>Object oriented</h3>
+						<ul>
+							<li>define classes that combine data & methods</li>
+							<li>define hierarchies between classes</li>
+							<li>use class, abstract class, interface</li>
+						</ul></div>
+					<div class="col"><h3>Functional</h3>
+						<ul>
+							<li class="fragment">data and what is done with data is separated</li>
+							<li class="fragment">use data and functions</li>
+							<li class="fragment">data is either <ul><li>a set of values (data class): <br>&nbsp;&nbsp;&nbsp;&nbsp;User(id: Int, name: String)</li>
+							<li class="fragment">a group of variants: <br>&nbsp;&nbsp;&nbsp;&nbsp;PaymentMethod = CreditCard(number) | Cash | ...</li></ul></li>
+							<li class="fragment">much less flexibility, more or less evident</li>
+						</ul>
+					</div>
+					</div>
+			</section>
+
+			<section data-auto-animate>
+				OOP: define classes that combine data & methods
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class User(_id: Int, _name: String) {
+													def id = _id // getter
+													def name = _name // getter
+													def update() = ??? // talk to user db
+													def delete() = ??? // talk to user db
+												}
+												object User {
+													// constructor
+													def apply(id: Int, name: String): User = new User(id,name) 
+													// static functions
+													def create(name: String) = ??? // talk to user db
+													def read(id: Int): User = ??? // talk to user db
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+						<ul>
+							<li>We define all the data and behavior in a class</li>
+							<li class="fragment"><a href="https://en.wikipedia.org/wiki/Active_record_pattern">Active Record Pattern</a></li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				OOP: define classes that combine data & methods
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class User(_id: Int, _name: String) {
+													def id = _id // getter
+													def name = _name // getter
+													def update() = ???
+													def delete() = ???
+
+													def sendEmail(msg: String) = ???
+												}
+												object User {
+													// constructor
+													def apply(id: Int, name: String): User = new User(id,name) 
+													// static functions
+													def create(name: String) = ???
+													def read(id: Int): User = ???
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+						<ul>
+							<li>We want to send emails to the user</li>
+							<li class="fragment">The class gets bigger and bigger (anti-pattern: <a href="https://en.wikipedia.org/wiki/God_object">god object</a>)</li>
+					</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				OOP: define classes that combine data & methods
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												class User(_id: Int, _name: String) {
+													def id = _id // getter
+													def name = _name // getter
+												}
+												object User {
+													// constructor
+													def apply(id: Int, name: String): User = new User(id,name) 
+												}
+
+												trait UserRepository {
+													def update(user: User)
+													def delete(user: User)
+													def create(name: String)
+													def read(id: Int)
+												}
+
+												trait EmailService {
+													def send(user: User, msg: String)
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+						<ul>
+							<li>Repository Pattern to the rescue</li>
+					</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				Functional: Split data & behavior
+				<div id="grid" class="r-stretch">
+                    <div id="top">
+                        <pre data-id="code-animation">
+
+											<code data-trim data-noescape class="language-scala">
+												// data/data class/record 
+												case class User(id: Int, name: String)
+
+												// set of functions
+												trait UserRepository {
+													def update(user: User)
+													def delete(user: User)
+													def create(name: String)
+													def read(id: Int)
+												}
+
+												trait EmailService {
+													def send(user: User, msg: String)
+												}
+											</code></pre>
+                    </div>
+                    <div id="bottom">
+						<ul>
+							<li>using the repository pattern, we split into data and functions (as functional programming suggests)</li>
+						</ul>
+                    </div>
+                </div>
+			</section>
+
+			<section data-auto-animate>
+				functional data building blocks
+				<pre data-id="code-animation">
+
+					<code data-trim data-noescape class="language-scala">
+						// data/data class/record 
+						case class User(id: Int, name: String)
+
+						// a group of variants
+						enum BinaryTree[+A]{
+							case Node(value: A, left: BinaryTree[A], right: BinaryTree[A])
+							case Leaf
+						}
+
+						def f[A](b: BinaryTree[A]) = b match {
+							case Node(value, left, right) => // do sth.
+							case Leaf => // do sth.
+						}
+					</code></pre>
+				<ul>
+					<li class="fragment">more and more languages add data classes/records
+						(<a href="https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-9#record-types">C# 9.0</a>,
+						<a href="https://openjdk.java.net/jeps/395">Java 16</a>, <a href="https://peps.python.org/pep-0557/">Python 3.7</a>)
+					</li>
+					<li class="fragment">pattern matching is also included (<a href="https://peps.python.org/pep-0557/">Java 16</a>, 
+					<a href="https://peps.python.org/pep-0634/">Python 3.10</a>, C# 7.0)</li>
+			</section>
+
+			<section>
+				<h2>Summary</h2>
+				<ul>
+					<li>try to make your functions pure</li>
+					<li>sometimes data is just data</li>
+					<li><a href="https://www.youtube.com/watch?v=-KA3BSdqYug">YouTube: Thinking Functionally</a><br>live-refactoring of a concurrent imperative program to its purely functional equivalent</li>
+					<li>functional programming doesn't need scary words</li>
+					<li>if you're interested in more advanced and in-depth information (e.g. monads)
+						<ul>
+							<li><a href="https://www.youtube.com/watch?v=30q6BkBv5MY">YouTube: Functional Programming with Effects</a></li>
+							<li>The red book: <a href="https://www.manning.com/books/functional-programming-in-scala">Functional Programming in Scala</a></li></ul>
+					</li>
+				</ul>
+			</section>
+        </div>
+
+
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>
